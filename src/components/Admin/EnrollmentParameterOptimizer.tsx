@@ -879,11 +879,11 @@ export const EnrollmentParameterOptimizer: React.FC<Props> = ({
               <p className="text-xs text-slate-500 mt-1">
                 {deleteTarget.isSystemField ? (
                   <>
-                    Parameter <strong>"{deleteTarget.label}"</strong> ({deleteTarget.key}) is required for core institutional workflows and student authentication. It cannot be deleted.
+                    Parameter <strong>&quot;{deleteTarget.label}&quot;</strong> ({deleteTarget.key}) is required for core institutional workflows and student authentication. It cannot be deleted.
                   </>
                 ) : (
                   <>
-                    Are you sure you want to archive parameter <strong>"{deleteTarget.label}"</strong> ({deleteTarget.key})? The field will be deactivated and archived, safely preserving all historical student enrollment attributes.
+                    Are you sure you want to archive parameter <strong>&quot;{deleteTarget.label}&quot;</strong> ({deleteTarget.key})? The field will be deactivated and archived, safely preserving all historical student enrollment attributes.
                   </>
                 )}
               </p>

@@ -1001,7 +1001,7 @@ export const MasterDataView: React.FC<Props> = ({
             <div className="flex items-center gap-2.5 text-rose-600">
               <Trash2 className="w-5 h-5 shrink-0" />
               <h3 className="text-sm font-bold text-slate-900">
-                Move "{deleteTarget.name}" to Trash?
+                Move &quot;{deleteTarget.name}&quot; to Trash?
               </h3>
             </div>
 

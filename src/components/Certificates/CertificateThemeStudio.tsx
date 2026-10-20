@@ -341,7 +341,7 @@ export const CertificateThemeStudio: React.FC<Props> = ({
                 <span>How to get mapped to this service?</span>
               </div>
               <p className="text-[11px] text-amber-900">
-                Contact your Institutional ERP Administrator. The administrator can grant your staff account the "Certificate Theme Designer" service right with 1-click in the <strong>School User Directory → Service Mapping</strong> console.
+                Contact your Institutional ERP Administrator. The administrator can grant your staff account the &quot;Certificate Theme Designer&quot; service right with 1-click in the <strong>School User Directory → Service Mapping</strong> console.
               </p>
             </div>
           </div>
@@ -519,7 +519,7 @@ export const CertificateThemeStudio: React.FC<Props> = ({
 
               {filteredThemes.length === 0 && (
                 <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl text-center text-xs text-slate-500">
-                  No themes found for scope "{filterCertType}".
+                  No themes found for scope &quot;{filterCertType}&quot;.
                 </div>
               )}
             </div>
@@ -1260,7 +1260,7 @@ export const CertificateLiveCanvas: React.FC<CanvasProps> = ({ theme, certType }
           <div className="flex items-center justify-center gap-2 mb-1">
             <div className="h-px flex-1" style={{ backgroundColor: theme.accentColor }} />
             <span className="text-[9px] font-bold uppercase tracking-widest px-2" style={{ color: theme.primaryBorderColor }}>
-              {INSTITUTION_INFO.treasuryCode} · NAAC Grade 'A'
+              {INSTITUTION_INFO.treasuryCode} · NAAC Grade &apos;A&apos;
             </span>
             <div className="h-px flex-1" style={{ backgroundColor: theme.accentColor }} />
           </div>

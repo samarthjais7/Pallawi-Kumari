@@ -841,7 +841,7 @@ export const PermanentCampaignManager: React.FC<Props> = ({
                       (from {new Date(ext.oldEndDate).toLocaleDateString()})
                     </span>
                   </div>
-                  <p className="text-slate-600 italic">"{ext.reason}"</p>
+                  <p className="text-slate-600 italic">&quot;{ext.reason}&quot;</p>
                 </div>
                 <div className="text-right text-[11px] text-slate-400 shrink-0">
                   <span className="block font-medium text-slate-600">{ext.extendedBy}</span>

@@ -1263,7 +1263,7 @@ export const CampaignWizard: React.FC<Props> = ({
                     <BookOpen className="w-8 h-8 text-slate-400 mx-auto" />
                     <p className="font-bold text-slate-700">No cohorts added yet</p>
                     <p className="text-[11px] text-slate-400">
-                      Choose a course & semester above and click "Add Cohort to Campaign Audience".
+                      Choose a course & semester above and click &quot;Add Cohort to Campaign Audience&quot;.
                     </p>
                   </div>
                 ) : (

@@ -305,7 +305,7 @@ export const DynamicQrConfigModal: React.FC<Props> = ({
             </div>
             <p className="text-[11px] text-slate-600 leading-relaxed">
               In accordance with college financial controls, generated QRs are embedded with the exact pending fee sum. 
-              The UPI transaction note automatically includes the student's unique Roll Number (<code className="font-mono text-indigo-700 font-bold">&tn=FEE-ROLLNO-SEM</code>) 
+              The UPI transaction note automatically includes the student&apos;s unique Roll Number (<code className="font-mono text-indigo-700 font-bold">&tn=FEE-ROLLNO-SEM</code>) 
               to enable automated reconciliation and prevent misallocation.
             </p>
           </div>

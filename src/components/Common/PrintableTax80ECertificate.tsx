@@ -152,7 +152,7 @@ export const PrintableTax80ECertificate: React.FC<Props> = ({ student, transacti
           {INSTITUTION_INFO.name}
         </h1>
         <div className="text-xs font-bold text-emerald-800 font-sans">
-          {INSTITUTION_INFO.dept} · ACCREDITED NAAC GRADE 'A'
+          {INSTITUTION_INFO.dept} · ACCREDITED NAAC GRADE &apos;A&apos;
         </div>
         <div className="text-[11px] text-slate-500 font-sans">
           {INSTITUTION_INFO.address} · Treasury DDO Code: {INSTITUTION_INFO.treasuryCode}

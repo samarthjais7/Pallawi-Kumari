@@ -1201,7 +1201,7 @@ export const StudentMobileApp: React.FC<Props> = ({
                                 opt.isPayable
                                   ? 'bg-purple-700 hover:bg-purple-800 text-white'
                                   : 'bg-emerald-700 hover:bg-emerald-800 text-white'
-                              }`}
+                              }"}
                             >
                               <PlusCircle className="w-4 h-4" />
                               <span>{opt.isPayable ? `Apply & Pay ₹${opt.feeAmount}` : 'Apply For Free'}</span>
@@ -1223,7 +1223,7 @@ export const StudentMobileApp: React.FC<Props> = ({
                     <ClipboardList className="w-8 h-8 text-slate-300 mx-auto" />
                     <span className="text-xs font-bold text-slate-700 block">No applications filed yet</span>
                     <p className="text-[11px] text-slate-400">
-                      You haven't requested any certificate or campus facility yet.
+                      You haven&apos;t requested any certificate or campus facility yet.
                     </p>
                     <button
                       onClick={() => setApplySubTab('available')}
