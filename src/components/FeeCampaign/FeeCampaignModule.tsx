@@ -43,7 +43,7 @@ import {
   X,
   Download,
   Percent,
-  Infinity,
+  Infinity as InfinityIcon,
   ArrowLeft,
   LogOut,
   Calendar,
