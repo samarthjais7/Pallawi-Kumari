@@ -272,7 +272,7 @@ export const DynamicQrConfigModal: React.FC<Props> = ({
                 <select
                   disabled={!isAccountantOrAdmin}
                   value={formData.accountType}
-                  onChange={(e) => setFormData({ ...formData, accountType: e.target.value as any })}
+                  onChange={(e) => setFormData({ ...formData, accountType: e.target.value })}
                   className="w-full p-2 bg-white border border-slate-300 rounded-xl font-medium focus:ring-2 focus:ring-emerald-600 disabled:bg-slate-100"
                 >
                   <option value="Govt_Treasury">Govt Treasury Current Account</option>
@@ -305,7 +305,7 @@ export const DynamicQrConfigModal: React.FC<Props> = ({
             </div>
             <p className="text-[11px] text-slate-600 leading-relaxed">
               In accordance with college financial controls, generated QRs are embedded with the exact pending fee sum. 
-              The UPI transaction note automatically includes the student's unique Roll Number (<code className="font-mono text-indigo-700 font-bold">&tn=FEE-ROLLNO-SEM</code>) 
+              The UPI transaction note automatically includes the student&apos;s unique Roll Number (<code className="font-mono text-indigo-700 font-bold">&tn=FEE-ROLLNO-SEM</code>) 
               to enable automated reconciliation and prevent misallocation.
             </p>
           </div>

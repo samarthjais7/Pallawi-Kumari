@@ -4,24 +4,25 @@
  */
 
 import { calculateStudentFeeScheduleServer, validateLedgerCommitServer } from '../../src/services/serverFeeEngine';
+import { Response } from 'express';
 
 export interface CloudFunctionFeeRequest {
   body: {
-    student: any;
-    feeHeads: any[];
-    concessionRules: any[];
-    subjects?: any[];
+    student: unknown;
+    feeHeads: unknown[];
+    concessionRules: unknown[];
+    subjects?: unknown[];
   };
 }
 
 export interface CloudFunctionLedgerRequest {
-  body: any;
+  body: unknown;
 }
 
 /**
  * Cloud Function HTTP handler for /calculateFeeSchedule
  */
-export async function calculateFeeScheduleHttp(req: CloudFunctionFeeRequest, res: any) {
+export async function calculateFeeScheduleHttp(req: CloudFunctionFeeRequest, res: Response) {
   try {
     const { student, feeHeads, concessionRules, subjects } = req.body;
     if (!student) {
@@ -36,10 +37,11 @@ export async function calculateFeeScheduleHttp(req: CloudFunctionFeeRequest, res
     );
 
     return res.status(200).json(result);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const details = error instanceof Error ? error.message : String(error);
     return res.status(500).json({
       error: 'Calculation failed',
-      details: error?.message || String(error),
+      details,
     });
   }
 }
@@ -47,7 +49,7 @@ export async function calculateFeeScheduleHttp(req: CloudFunctionFeeRequest, res
 /**
  * Cloud Function HTTP handler for /validateLedgerCommit
  */
-export async function validateLedgerCommitHttp(req: CloudFunctionLedgerRequest, res: any) {
+export async function validateLedgerCommitHttp(req: CloudFunctionLedgerRequest, res: Response) {
   try {
     const payload = req.body;
     const validation = validateLedgerCommitServer(payload);
@@ -57,10 +59,10 @@ export async function validateLedgerCommitHttp(req: CloudFunctionLedgerRequest, 
     }
 
     return res.status(200).json(validation);
-  } catch (error: any) {
+  } catch (error: unknown) {
     return res.status(500).json({
       error: 'Validation failed',
-      details: error?.message || String(error),
+      details: error instanceof Error ? error.message : String(error),
     });
   }
 }

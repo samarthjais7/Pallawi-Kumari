@@ -174,7 +174,7 @@ export interface EnrollmentField {
   label: string;            // e.g. "Gender", "Caste / Social Category"
   type: FieldType;
   options?: string[];       // for select type: e.g. ["Male", "Female", "Transgender"]
-  defaultValue?: any;
+  defaultValue?: unknown;
   placeholder?: string;
   isRequired: boolean;
   mandatoryBeforeLogin?: boolean; // Must be obtained before login if not already captured
@@ -204,7 +204,7 @@ export interface ConcessionSurchargeRule {
   targetHeadId?: string;    // 'ALL_TUITION' | 'TOTAL_FEE' | specific feeHead id
   criteriaField: string;    // e.g. "gender", "category", "quota", "annual_income"
   criteriaOperator: RuleOperator;
-  criteriaValue: any;       // e.g. "Female" or ["SC", "ST"] or 250000
+  criteriaValue: string | string[] | number;       // e.g. "Female" or ["SC", "ST"] or 250000
   isActive: boolean;
   priority: number;
 }
@@ -342,7 +342,7 @@ export interface Student {
   scholarshipName?: string;
   appliedConcessions?: { ruleName: string; amount: number }[];
   appliedSurcharges?: { ruleName: string; amount: number }[];
-  customFields?: Record<string, any>;
+  customFields?: Record<string, unknown>;
   totalFee: number;
   paidFee: number;
   pendingFee: number;

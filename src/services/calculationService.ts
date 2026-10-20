@@ -27,7 +27,7 @@ export async function requestServerFeeSchedule(
   subjects?: StudySubject[]
 ): Promise<ServerFeeCalculationResult> {
   // If an external Cloud Function URL is configured, we can post to it:
-  const cloudFunctionUrl = (import.meta as any).env?.VITE_FEE_CALCULATION_FUNCTION_URL;
+  const cloudFunctionUrl = import.meta.env.VITE_FEE_CALCULATION_FUNCTION_URL;
 
   if (cloudFunctionUrl) {
     try {
@@ -63,7 +63,7 @@ export async function requestServerFeeSchedule(
 export async function validateAndCommitLedger(
   payload: LedgerCommitPayload
 ): Promise<LedgerCommitValidationResult> {
-  const cloudValidationUrl = (import.meta as any).env?.VITE_LEDGER_VALIDATION_FUNCTION_URL;
+  const cloudValidationUrl = import.meta.env.VITE_LEDGER_VALIDATION_FUNCTION_URL;
 
   if (cloudValidationUrl) {
     try {

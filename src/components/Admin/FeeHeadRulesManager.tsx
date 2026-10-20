@@ -376,7 +376,7 @@ export const FeeHeadRulesManager: React.FC<Props> = ({
           {/* Status Filter */}
           <select
             value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value as any)}
+            onChange={(e) => setFilterStatus(e.target.value as string)}
             className="p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 cursor-pointer"
           >
             <option value="ALL">All Status</option>
@@ -609,7 +609,7 @@ export const FeeHeadRulesManager: React.FC<Props> = ({
                   <label className="text-slate-700 font-semibold block mb-1">Action Type *</label>
                   <select
                     value={ruleForm.action}
-                    onChange={(e) => setRuleForm({ ...ruleForm, action: e.target.value as any })}
+                    onChange={(e) => setRuleForm({ ...ruleForm, action: e.target.value as string })}
                     className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white font-semibold text-xs cursor-pointer"
                   >
                     <option value="Concession">Concession (Waiver / Discount)</option>
@@ -621,7 +621,7 @@ export const FeeHeadRulesManager: React.FC<Props> = ({
                   <label className="text-slate-700 font-semibold block mb-1">Calculation Mode</label>
                   <select
                     value={ruleForm.calculationMode}
-                    onChange={(e) => setRuleForm({ ...ruleForm, calculationMode: e.target.value as any })}
+                    onChange={(e) => setRuleForm({ ...ruleForm, calculationMode: e.target.value })}
                     className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white font-semibold text-xs cursor-pointer"
                   >
                     <option value="Percentage">Percentage (%)</option>
@@ -695,7 +695,7 @@ export const FeeHeadRulesManager: React.FC<Props> = ({
                     <label className="text-slate-500 text-[10px] font-semibold block mb-1">Operator</label>
                     <select
                       value={ruleForm.criteriaOperator}
-                      onChange={(e) => setRuleForm({ ...ruleForm, criteriaOperator: e.target.value as any })}
+                      onChange={(e) => setRuleForm({ ...ruleForm, criteriaOperator: e.target.value })}
                       className="w-full p-2 bg-white border border-slate-300 rounded-xl font-semibold text-xs"
                     >
                       <option value="equals">Equals</option>

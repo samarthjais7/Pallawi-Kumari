@@ -517,7 +517,7 @@ export const FacilityOptionsManager: React.FC<Props> = ({
                   <label className="font-bold text-slate-700 block mb-1">Category *</label>
                   <select
                     value={optionForm.category || 'Certificate'}
-                    onChange={(e) => setOptionForm({ ...optionForm, category: e.target.value as any })}
+                    onChange={(e) => setOptionForm({ ...optionForm, category: e.target.value })}
                     className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg font-medium text-slate-900 focus:bg-white"
                   >
                     <option value="Certificate">Official Certificate</option>

@@ -112,9 +112,13 @@ export const CollegeProfileManager: React.FC<Props> = ({
       setIsSaving(false);
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 4000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setIsSaving(false);
-      setErrorMessage(err?.message || 'Failed to update college details. Please try again.');
+      if (err instanceof Error) {
+        setErrorMessage(err.message);
+      } else {
+        setErrorMessage('Failed to update college details. Please try again.');
+      }
     }
   };
 

@@ -849,7 +849,7 @@ export const ReportGenerationEngine: React.FC<Props> = ({
                   <label className="text-slate-700 font-semibold block mb-1">Report Category</label>
                   <select
                     value={configForm.category}
-                    onChange={(e) => setConfigForm({ ...configForm, category: e.target.value as any })}
+                    onChange={(e) => setConfigForm({ ...configForm, category: e.target.value })}
                     className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:bg-white"
                   >
                     <option value="Fee_Collection">Fee Collection Realization</option>

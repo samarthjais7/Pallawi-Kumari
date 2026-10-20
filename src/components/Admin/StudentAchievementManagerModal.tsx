@@ -270,7 +270,7 @@ export const StudentAchievementManagerModal: React.FC<Props> = ({
           </div>
           <h4 className="text-sm font-bold text-slate-900">Restricted School User Privilege</h4>
           <p className="text-xs text-slate-600 max-w-md mx-auto">
-            Your staff account is not currently authorized to award gems or record student honors. The Institutional Admin or Accountant can designate your email in the "Authorized Staff" directory.
+            Your staff account is not currently authorized to award gems or record student honors. The Institutional Admin or Accountant can designate your email in the &quot;Authorized Staff&quot; directory.
           </p>
           {!isFullPage && (
             <button
@@ -502,7 +502,7 @@ export const StudentAchievementManagerModal: React.FC<Props> = ({
                   <label className="text-slate-700 font-semibold block mb-1">Honor / Badge Level</label>
                   <select
                     value={badgeLevel}
-                    onChange={(e) => setBadgeLevel(e.target.value as any)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBadgeLevel(e.target.value)}
                     className="w-full p-2 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white font-medium"
                   >
                     <option value="Gold">Gold Medal / 1st Place</option>

@@ -743,7 +743,7 @@ export const EnrollmentParameterOptimizer: React.FC<Props> = ({
                   <label className="font-bold text-slate-700 block mb-1">Category Classification</label>
                   <select
                     value={formCategory}
-                    onChange={(e) => setFormCategory(e.target.value as any)}
+                    onChange={(e) => setFormCategory(e.target.value as string)}
                     className="w-full px-3.5 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   >
                     <option value="Personal">Personal Details</option>
@@ -879,11 +879,11 @@ export const EnrollmentParameterOptimizer: React.FC<Props> = ({
               <p className="text-xs text-slate-500 mt-1">
                 {deleteTarget.isSystemField ? (
                   <>
-                    Parameter <strong>"{deleteTarget.label}"</strong> ({deleteTarget.key}) is required for core institutional workflows and student authentication. It cannot be deleted.
+                    Parameter <strong>&quot;{deleteTarget.label}&quot;</strong> ({deleteTarget.key}) is required for core institutional workflows and student authentication. It cannot be deleted.
                   </>
                 ) : (
                   <>
-                    Are you sure you want to archive parameter <strong>"{deleteTarget.label}"</strong> ({deleteTarget.key})? The field will be deactivated and archived, safely preserving all historical student enrollment attributes.
+                    Are you sure you want to archive parameter <strong>&quot;{deleteTarget.label}&quot;</strong> ({deleteTarget.key})? The field will be deactivated and archived, safely preserving all historical student enrollment attributes.
                   </>
                 )}
               </p>

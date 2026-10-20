@@ -98,7 +98,7 @@ assert(invalidLedger.isValid === false, "Unbalanced ledger commit strictly rejec
 const mandatoryFieldsMock: EnrollmentField[] = [
   { id: 'f1', key: 'gender', label: 'Gender', type: 'select', isRequired: true, isActive: true, category: 'Personal' }
 ];
-const incompleteStudent: Student = { ...testStudent1, gender: '' as any };
+const incompleteStudent: Student = { ...testStudent1, gender: '' };
 const profileCheck = validateStudentProfile(incompleteStudent, mandatoryFieldsMock);
 assert(profileCheck.isComplete === false, "Blocking Hook Guard for Incomplete Mandatory Personal Profile Record");
 
@@ -161,8 +161,10 @@ let rollbackTriggered = false;
 try {
   // First cluster has rows 1 to 500; row 421 is inside this cluster
   validateClusterAtomicity(chunks[0], 0, 0, 421);
-} catch (err: any) {
-  rollbackTriggered = err.message.includes('Row 421');
+} catch (err: unknown) {
+  if (err instanceof Error) {
+    rollbackTriggered = err.message.includes('Row 421');
+  }
 }
 assert(rollbackTriggered === true, "Row 421 bad duplicate data structure cleanly aborts and rolls back entire 500-student block");
 
@@ -210,19 +212,28 @@ assert(semSchedule.finalInstallment === 1250050, "Semester 2 final installment =
 assert(semSchedule.installments[0] + semSchedule.installments[1] === 2500100, "Sum of semester installments exactly equals total annual fee");
 
 // Test Case 14: Safe Field Fallbacks in Student Self-Service Profile Update
-const existingStudentMissingDefaults: Record<string, any> = {
+interface StudentDocument {
+  id: string;
+  name: string;
+  totalFee?: number;
+  paidFee?: number;
+  pendingFee?: number;
+  rollNo?: string;
+}
+
+const existingStudentMissingDefaults: StudentDocument = {
   id: 'STU-999',
   name: 'Test Student',
   // totalFee, paidFee, pendingFee, rollNo omitted in legacy document
 };
-const studentUpdatePayload: Record<string, any> = {
+const studentUpdatePayload: StudentDocument & { phone: string; isActivated: boolean } = {
   ...existingStudentMissingDefaults,
   phone: '9876543210',
   isActivated: true
 };
 
-const getSafe = (obj: Record<string, any>, key: string, fallback: any) =>
-  obj[key] !== undefined && obj[key] !== null ? obj[key] : fallback;
+const getSafe = <T>(obj: Record<string, T | undefined>, key: string, fallback: T): T =>
+  obj[key] !== undefined && obj[key] !== null ? (obj[key] as T) : fallback;
 
 assert(getSafe(studentUpdatePayload, 'totalFee', 0) === getSafe(existingStudentMissingDefaults, 'totalFee', 0), "Safe fallback matches totalFee 0 === 0 for missing field");
 assert(getSafe(studentUpdatePayload, 'paidFee', 0) === getSafe(existingStudentMissingDefaults, 'paidFee', 0), "Safe fallback matches paidFee 0 === 0 for missing field");

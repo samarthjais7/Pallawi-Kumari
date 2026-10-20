@@ -745,7 +745,7 @@ export const CampaignWizard: React.FC<Props> = ({
                   <label className="text-slate-600 font-medium block mb-1">Fine Type</label>
                   <select
                     value={lateFeeType}
-                    onChange={(e) => setLateFeeType(e.target.value as any)}
+                    onChange={(e) => setLateFeeType(e.target.value as string)}
                     className="w-full min-h-[40px] p-2 bg-white border border-slate-300 rounded-lg font-bold"
                   >
                     <option value="PER_DAY">Per Day Rate (₹/day)</option>
@@ -1159,7 +1159,7 @@ export const CampaignWizard: React.FC<Props> = ({
 
                     <select
                       value={cohortConcessionType}
-                      onChange={(e) => setCohortConcessionType(e.target.value as any)}
+                      onChange={(e) => setCohortConcessionType(e.target.value as string)}
                       className="min-h-[36px] p-1.5 bg-slate-50 border border-slate-300 rounded-lg font-bold"
                     >
                       <option value="None">No Concession</option>
@@ -1202,7 +1202,7 @@ export const CampaignWizard: React.FC<Props> = ({
                         </label>
                         <select
                           value={cohortConcessionCriteria}
-                          onChange={(e) => setCohortConcessionCriteria(e.target.value as any)}
+                          onChange={(e) => setCohortConcessionCriteria(e.target.value)}
                           className="w-full min-h-[38px] p-2 bg-slate-50 border border-slate-300 rounded-lg"
                         >
                           <option value="ALL">All Students in Cohort</option>
@@ -1263,7 +1263,7 @@ export const CampaignWizard: React.FC<Props> = ({
                     <BookOpen className="w-8 h-8 text-slate-400 mx-auto" />
                     <p className="font-bold text-slate-700">No cohorts added yet</p>
                     <p className="text-[11px] text-slate-400">
-                      Choose a course & semester above and click "Add Cohort to Campaign Audience".
+                      Choose a course & semester above and click &quot;Add Cohort to Campaign Audience&quot;.
                     </p>
                   </div>
                 ) : (

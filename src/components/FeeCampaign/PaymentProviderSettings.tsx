@@ -422,7 +422,7 @@ export const PaymentProviderSettings: React.FC<Props> = ({
                       No Payment Provider Onboarded
                     </h3>
                     <p className="text-xs text-slate-600 mt-1 max-w-xl leading-relaxed">
-                      Online fee payments are currently disabled across student portals and quick payments. Students see the <strong>"Online Payment Service Coming Soon"</strong> banner. Once an administrator configures and maps the authorized payment provider credentials, the <strong>"Pay Now"</strong> button will automatically become live.
+                      Online fee payments are currently disabled across student portals and quick payments. Students see the <strong>&quot;Online Payment Service Coming Soon&quot;</strong> banner. Once an administrator configures and maps the authorized payment provider credentials, the <strong>&quot;Pay Now&quot;</strong> button will automatically become live.
                     </p>
                   </div>
                 </div>
@@ -779,7 +779,7 @@ export const PaymentProviderSettings: React.FC<Props> = ({
                 <label className="text-slate-800 font-bold block mb-1">Payment Mode *</label>
                 <select
                   value={offlineMode}
-                  onChange={(e) => setOfflineMode(e.target.value as any)}
+                  onChange={(e) => setOfflineMode(e.target.checked)}
                   className="w-full min-h-[44px] p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold"
                 >
                   <option value="Cash">Cash at Counter</option>
@@ -1021,7 +1021,7 @@ export const PaymentProviderSettings: React.FC<Props> = ({
                     <span>Important Institution Policy Confirmation</span>
                   </div>
                   <p className="leading-relaxed text-xs">
-                    "All new payments for every campaign will go to <strong>{newDisplayName || newType}</strong>.{activeProvider ? ` Payments already made stay with the previous provider (${activeProvider.name}).` : ' This will activate online payments for all students.'}"
+                    &quot;All new payments for every campaign will go to <strong>{newDisplayName || newType}</strong>.{activeProvider ? ` Payments already made stay with the previous provider (${activeProvider.name}).` : ' This will activate online payments for all students.'}&quot;
                   </p>
                 </div>
 

@@ -391,7 +391,7 @@ export const StreamSubjectMaster: React.FC<Props> = ({
               Stream & Subject Master
             </h1>
             <p className="text-sm text-teal-100 mt-1 max-w-2xl leading-relaxed">
-              Create, modify, and delete Academic Streams and Subjects. Tag Annual Fee, Monthly Fee, Semester-wise Fee, Lab Fee, and special fees for each subject. The auto-summation of all subjects in a stream directly defines the stream's Annual, Monthly, and Semester Fee campaigns.
+              Create, modify, and delete Academic Streams and Subjects. Tag Annual Fee, Monthly Fee, Semester-wise Fee, Lab Fee, and special fees for each subject. The auto-summation of all subjects in a stream directly defines the stream&apos;s Annual, Monthly, and Semester Fee campaigns.
             </p>
           </div>
 
@@ -649,7 +649,7 @@ export const StreamSubjectMaster: React.FC<Props> = ({
                         {getStreamSubjects(currentStreamObj.code).length === 0 ? (
                           <tr>
                             <td colSpan={8} className="py-8 text-center text-slate-400">
-                              No subjects tagged to stream {currentStreamObj.code} yet. Click "Add Subject to {currentStreamObj.code}" above!
+                              No subjects tagged to stream {currentStreamObj.code} yet. Click &quot;Add Subject to {currentStreamObj.code}&quot; above!
                             </td>
                           </tr>
                         ) : (
@@ -1136,7 +1136,7 @@ export const StreamSubjectMaster: React.FC<Props> = ({
                   <label className="font-bold text-slate-700 block mb-1">Subject Type</label>
                   <select
                     value={subjectType}
-                    onChange={(e) => setSubjectType(e.target.value as any)}
+                    onChange={(e) => setSubjectType(e.target.value as string)}
                     className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                   >
                     <option value="Theory">Theory</option>
@@ -1324,7 +1324,7 @@ export const StreamSubjectMaster: React.FC<Props> = ({
             <div className="text-center">
               <h4 className="text-base font-bold text-slate-900">Delete {deleteTarget.type === 'stream' ? 'Stream' : 'Subject'}?</h4>
               <p className="text-xs text-slate-500 mt-1">
-                Are you sure you want to delete <strong>"{deleteTarget.name}"</strong>?
+                Are you sure you want to delete <strong>&quot;{deleteTarget.name}&quot;</strong>?
               </p>
             </div>
             <div className="flex items-center gap-2">

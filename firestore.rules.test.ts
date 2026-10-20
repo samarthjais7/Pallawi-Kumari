@@ -12,14 +12,14 @@ interface MockSecurityContext {
       role?: string;
       rollNo?: string;
       firebase?: { sign_in_provider?: string };
-      [key: string]: any;
+      [key: string]: unknown;
     };
   } | null;
   adminDirectory?: Set<string>;
 }
 
 interface MockDocResource {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 // Security rule helpers replicated for programmatic validation
@@ -30,23 +30,23 @@ function checkIsAdmin(ctx: MockSecurityContext): boolean {
 }
 
 function checkCanStudentUpdate(
-  ctx: MockSecurityContext, 
-  existingData: Record<string, any>, 
-  incomingData: Record<string, any>
+  ctx: MockSecurityContext,
+  existingData: Record<string, unknown>,
+  incomingData: Record<string, unknown>
 ): boolean {
   if (!ctx.auth) return false;
-  const isSelf = existingData.id === ctx.auth.uid || 
-    (existingData.email === ctx.auth.token.email && ctx.auth.token.email_verified === true);
+  const isSelf = existingData['id'] === ctx.auth.uid || 
+    (existingData['email'] === ctx.auth.token.email && ctx.auth.token.email_verified === true);
   if (!isSelf) return false;
 
-  const getVal = (obj: Record<string, any>, key: string, fallback: any) =>
-    obj[key] !== undefined && obj[key] !== null ? obj[key] : fallback;
+  const getVal = <T>(obj: Record<string, unknown>, key: string, fallback: T): T =>
+    obj[key] !== undefined && obj[key] !== null ? (obj[key] as T) : fallback;
 
   // Immutability checks with safe fallbacks
-  if (getVal(incomingData, 'totalFee', 0) !== getVal(existingData, 'totalFee', 0)) return false;
-  if (getVal(incomingData, 'paidFee', 0) !== getVal(existingData, 'paidFee', 0)) return false;
-  if (getVal(incomingData, 'pendingFee', 0) !== getVal(existingData, 'pendingFee', 0)) return false;
-  if (getVal(incomingData, 'rollNo', '') !== getVal(existingData, 'rollNo', '')) return false;
+  if (getVal<number>(incomingData, 'totalFee', 0) !== getVal<number>(existingData, 'totalFee', 0)) return false;
+  if (getVal<number>(incomingData, 'paidFee', 0) !== getVal<number>(existingData, 'paidFee', 0)) return false;
+  if (getVal<number>(incomingData, 'pendingFee', 0) !== getVal<number>(existingData, 'pendingFee', 0)) return false;
+  if (getVal<string>(incomingData, 'rollNo', '') !== getVal<string>(existingData, 'rollNo', '')) return false;
 
   // Allowed self-service keys only
   const allowedKeys = new Set([
@@ -68,7 +68,12 @@ function checkIsStaff(ctx: MockSecurityContext): boolean {
 
 function checkCanCreateTransaction(
   ctx: MockSecurityContext, 
-  incomingTx: Record<string, any>
+  incomingTx: {
+    amount: number;
+    status: 'Success' | 'Pending' | 'Failed';
+    studentId?: string;
+    studentEmail?: string;
+  }
 ): boolean {
   if (!ctx.auth) return false;
   if (typeof incomingTx.amount !== 'number' || incomingTx.amount <= 0) return false;
@@ -85,7 +90,12 @@ function checkCanCreateTransaction(
 function checkCanSelfRegisterUser(
   ctx: MockSecurityContext,
   userId: string,
-  incomingUser: Record<string, any>
+  incomingUser: {
+    id: string;
+    email: string;
+    name: string;
+    role: 'student' | 'admin' | 'staff';
+  }
 ): boolean {
   if (!ctx.auth) return false;
   const isOwner = ctx.auth.uid === userId;
@@ -101,7 +111,7 @@ function checkCanSelfRegisterUser(
 
 function checkCanDeleteCampaign(
   ctx: MockSecurityContext,
-  incomingResourceData: Record<string, any> | null
+  incomingResourceData: Record<string, unknown> | null
 ): boolean {
   if (!ctx.auth) return false;
   // Rule evaluates without crashing when incoming() is null
@@ -111,7 +121,7 @@ function checkCanDeleteCampaign(
 function checkCanStudentSelfInit(
   ctx: MockSecurityContext,
   studentId: string,
-  incomingStudent: Record<string, any>
+  incomingStudent: { email: string; paidFee: number; totalFee: number; pendingFee: number }
 ): boolean {
   if (!ctx.auth) return false;
   if (checkIsAdmin(ctx)) return true;
@@ -123,8 +133,19 @@ function checkCanStudentSelfInit(
 
 function checkCanStudentPatchDue(
   ctx: MockSecurityContext,
-  existingDue: Record<string, any>,
-  patchData: Record<string, any>
+  existingDue: {
+    studentId: string;
+    netAmount: number;
+    balanceAmount: number;
+    phone?: string;
+    updatedAt?: unknown;
+  },
+  patchData: {
+    netAmount?: number;
+    balanceAmount?: number;
+    phone?: string;
+    updatedAt?: unknown;
+  }
 ): boolean {
   if (!ctx.auth) return false;
   // Checks existing().studentId so partial patch without studentId succeeds
@@ -141,7 +162,7 @@ function checkCanStudentPatchDue(
 
 function checkIsPrincipalOrDDO(
   ctx: MockSecurityContext,
-  staffDocData: Record<string, any>
+  staffDocData: { role?: string; staffRole?: string }
 ): boolean {
   if (!ctx.auth) return false;
   if (checkIsAdmin(ctx)) return true;
@@ -152,14 +173,38 @@ function checkIsPrincipalOrDDO(
 
 function checkIsStudentSelf(
   ctx: MockSecurityContext,
-  resourceData: Record<string, any>
+  resourceData: Record<string, unknown>
 ): boolean {
   if (!ctx.auth) return false;
-  if (resourceData.id === ctx.auth.uid || resourceData.studentId === ctx.auth.uid) return true;
-  if (resourceData.email && ctx.auth.token.email && resourceData.email === ctx.auth.token.email) return true;
-  if (resourceData.studentEmail && ctx.auth.token.email && resourceData.studentEmail === ctx.auth.token.email) return true;
-  if (resourceData.phone && (ctx.auth.token as any).phone_number && resourceData.phone === (ctx.auth.token as any).phone_number) return true;
-  if (resourceData.rollNo && ctx.auth.token.rollNo && resourceData.rollNo === ctx.auth.token.rollNo) return true;
+  const id = resourceData.id;
+  if (typeof id === 'string' && id === ctx.auth.uid) return true;
+  const studentId = resourceData.studentId;
+  if (typeof studentId === 'string' && studentId === ctx.auth.uid) return true;
+  const email = resourceData.email;
+  if (
+    typeof email === 'string' &&
+    ctx.auth.token.email &&
+    email === ctx.auth.token.email
+  ) return true;
+  const studentEmail = resourceData.studentEmail;
+  if (
+    typeof studentEmail === 'string' &&
+    ctx.auth.token.email &&
+    studentEmail === ctx.auth.token.email
+  ) return true;
+  const phone = resourceData.phone;
+  const tokenPhone = (ctx.auth.token as unknown as { phone_number?: unknown }).phone_number;
+  if (
+    typeof phone === 'string' &&
+    typeof tokenPhone === 'string' &&
+    phone === tokenPhone
+  ) return true;
+  const rollNo = resourceData.rollNo;
+  if (
+    typeof rollNo === 'string' &&
+    ctx.auth.token.rollNo &&
+    rollNo === ctx.auth.token.rollNo
+  ) return true;
   return false;
 }
 
@@ -332,7 +377,7 @@ function runSecurityTests() {
 
   // 12. Student identification via Phone Auth or OAuth token matching
   const phoneAuthCtx: MockSecurityContext = {
-    auth: { uid: 'STU-PHONE-99', token: { phone_number: '+919876543210' } } as any
+    auth: { uid: 'STU-PHONE-99', token: { phone_number: '+919876543210' } } as unknown
   };
   const phoneStudentRecord = { id: 'STU-OTHER-ID', phone: '+919876543210' };
   if (checkIsStudentSelf(phoneAuthCtx, phoneStudentRecord)) {
@@ -346,7 +391,7 @@ function runSecurityTests() {
   // 13. Helpdesk Ticket userId binding
   const validTicket = { id: 'TKT-1001', subject: 'Fee Receipt Issue', category: 'Fee_Payment', status: 'Open', userId: 'STU-001' };
   const forgedTicket = { id: 'TKT-1002', subject: 'Forged Ticket', category: 'Fee_Payment', status: 'Open', userId: 'STU-VICTIM-999' };
-  const canCreateValidTicket = (ctx: MockSecurityContext, t: any) => {
+  const canCreateValidTicket = (ctx: MockSecurityContext, t: { userId: string; studentId?: string }) => {
     return !!ctx.auth && (checkIsStaff(ctx) || t.userId === ctx.auth.uid || t.studentId === ctx.auth.uid);
   };
   if (canCreateValidTicket(validStudentCtx, validTicket)) {
@@ -401,8 +446,16 @@ function runSecurityTests() {
   }
 
   // 17. Due Arithmetic with float numbers & epsilon tolerance
-  const isValidDueArithmeticMock = (data: any) => {
-    const isNum = (v: any) => typeof v === 'number' && v >= 0;
+  interface DueAmounts {
+    baseAmount: number;
+    concessionAmount: number;
+    netAmount: number;
+    paidAmount: number;
+    balanceAmount: number;
+  }
+
+  const isValidDueArithmeticMock = (data: DueAmounts): boolean => {
+    const isNum = (v: unknown): v is number => typeof v === 'number' && v >= 0;
     if (!isNum(data.baseAmount) || !isNum(data.concessionAmount) || !isNum(data.netAmount) ||
         !isNum(data.paidAmount) || !isNum(data.balanceAmount)) return false;
     const diff1 = data.baseAmount - data.concessionAmount - data.netAmount;
@@ -419,7 +472,7 @@ function runSecurityTests() {
   }
 
   // 18. General staff cannot update student dues amounts (must be Principal/DDO or Admin)
-  const canStaffUpdateDueAmount = (ctx: MockSecurityContext, staffDoc: any) => {
+  const canStaffUpdateDueAmount = (ctx: MockSecurityContext, staffDoc: unknown) => {
     return !!ctx.auth && (checkIsAdmin(ctx) || checkIsPrincipalOrDDO(ctx, staffDoc));
   };
   const generalStaffDoc = { role: 'staff', staffRole: 'Lecturer' };
@@ -433,7 +486,7 @@ function runSecurityTests() {
   }
 
   // 19. General staff cannot update institutionProfile (must be Principal/DDO or Admin)
-  const canUpdateInstitutionProfile = (ctx: MockSecurityContext, staffDoc: any) => {
+  const canUpdateInstitutionProfile = (ctx: MockSecurityContext, staffDoc: unknown): boolean => {
     return !!ctx.auth && (checkIsAdmin(ctx) || checkIsPrincipalOrDDO(ctx, staffDoc));
   };
   assertDenied('Test 19a: General staff updating statutory institutionProfile', canUpdateInstitutionProfile(staffCtx, generalStaffDoc));
@@ -452,7 +505,14 @@ function runSecurityTests() {
   assertDenied('Test 20: Admin impersonation with matching email but email_verified=false', checkIsAdmin(unverifiedAdminDocCtx));
 
   // 21. Campaign payment with number/float amounts and optional studentId
-  const isValidCampaignPaymentMock = (data: any) => {
+  const isValidCampaignPaymentMock = (data: {
+    id: string;
+    campaignId: string;
+    studentId?: string;
+    rollNo: string;
+    amountPaid: number;
+    status: 'Success' | 'Pending' | 'Failed' | 'Mismatched' | 'Cancelled' | 'Refunded';
+  }): boolean => {
     return typeof data.id === 'string' && data.id.length <= 128 &&
            typeof data.campaignId === 'string' && data.campaignId.length <= 128 &&
            (!('studentId' in data) || (typeof data.studentId === 'string' && data.studentId.length <= 128)) &&
@@ -470,7 +530,7 @@ function runSecurityTests() {
   }
 
   // 22. Anonymous Token Rejected from Mutating Student Ledger Balances
-  const canUpdateStudentBalance = (ctx: MockSecurityContext, studentId: string, existingData: any, incomingData: any) => {
+  const canUpdateStudentBalance = (ctx: MockSecurityContext, studentId: string, existingData: { paidFee: number }, incomingData: { paidFee: number }): boolean => {
     if (!ctx.auth) return false;
     if (ctx.auth.token?.firebase?.sign_in_provider === 'anonymous') return false;
     return checkIsStaff(ctx) || (ctx.auth.uid === studentId && incomingData.paidFee >= existingData.paidFee);
@@ -486,8 +546,19 @@ function runSecurityTests() {
   );
 
   // 23. Student profile tamper with appliedConcessions array -> REJECTED
-  const canStudentUpdateConcessions = (incomingData: any, existingData: any) => {
-    return (!('appliedConcessions' in incomingData) || JSON.stringify(incomingData.appliedConcessions) === JSON.stringify(existingData.appliedConcessions));
+  const canStudentUpdateConcessions = (
+    incomingData: unknown,
+    existingData: unknown
+  ): boolean => {
+    if (typeof incomingData !== 'object' || incomingData === null) {
+      return true;
+    }
+    const incObj = incomingData as { appliedConcessions?: unknown };
+    const existingObj = existingData as { appliedConcessions?: unknown };
+    if (!('appliedConcessions' in incObj)) {
+      return true;
+    }
+    return JSON.stringify(incObj.appliedConcessions) === JSON.stringify(existingObj.appliedConcessions);
   };
   const forgedStudent = {
     ...existingStu,
@@ -500,7 +571,7 @@ function runSecurityTests() {
   );
 
   // 24. Audit Log actor identity spoofing by non-admin staff
-  const canCreateAuditLog = (ctx: MockSecurityContext, incomingLog: any) => {
+  const canCreateAuditLog = (ctx: MockSecurityContext, incomingLog: { userEmail: string; userId: string }): boolean => {
     if (!ctx.auth) return false;
     const isStaff = checkIsStaff(ctx);
     if (!isStaff) return false;
@@ -522,7 +593,12 @@ function runSecurityTests() {
   );
 
   // 25. Student attempting create on top of an already existing profile -> REJECTED
-  const canSelfInitializeStudent = (ctx: MockSecurityContext, studentId: string, incomingData: any, alreadyExists: boolean) => {
+  const canSelfInitializeStudent = (
+    ctx: MockSecurityContext,
+    studentId: string,
+    incomingData: { paidFee: number; totalFee: number; pendingFee: number },
+    alreadyExists: boolean
+  ): boolean => {
     if (!ctx.auth) return false;
     if (alreadyExists) return false;
     const isOwner = ctx.auth.uid === studentId;

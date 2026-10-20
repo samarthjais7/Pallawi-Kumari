@@ -474,7 +474,7 @@ export const CertificateModule: React.FC<Props> = ({
                 <label className="text-slate-700 block mb-1 font-medium">Certificate Type *</label>
                 <select
                   value={selectedCertType}
-                  onChange={(e) => setSelectedCertType(e.target.value as any)}
+                  onChange={(e) => setSelectedCertType(e.target.value)}
                   className="w-full p-2 bg-slate-50 border border-slate-300 rounded font-semibold text-xs"
                 >
                   <option value="Bonafide Certificate">Bonafide Student Certificate (Fee: ₹50)</option>
