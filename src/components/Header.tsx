@@ -31,7 +31,7 @@ import {
   Palette,
   Server,
   Settings,
-  Infinity as InfiniteIcon
+  Infinity as InfinityIcon
 } from 'lucide-react';
 import { UserProfileSummaryModal } from './Common/UserProfileSummaryModal';
 import { checkIsBirthdayToday } from '../utils/birthdayHelper';
