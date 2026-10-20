@@ -263,7 +263,9 @@ export default function App() {
       setCollegeProfile(previous);
       try {
         localStorage.setItem('college_profile', JSON.stringify(previous));
-      } catch {}
+      } catch {
+        // empty
+      }
     }
   };
 
@@ -280,7 +282,9 @@ export default function App() {
           });
           try {
             localStorage.setItem('college_profile', JSON.stringify(remoteData));
-          } catch {}
+          } catch {
+            // empty
+          }
         }
       },
       (error) => {

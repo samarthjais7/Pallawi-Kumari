@@ -65,7 +65,9 @@ function getCachedProfileField<K extends keyof typeof INITIAL_COLLEGE_PROFILE>(f
         }
       }
     }
-  } catch {}
+  } catch {
+    // empty
+  }
   return INITIAL_COLLEGE_PROFILE[field];
 }
 
