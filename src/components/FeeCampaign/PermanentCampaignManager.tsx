@@ -7,7 +7,7 @@ import {
 } from '../../types/campaign';
 import { AcademicStream, StudySubject, Student } from '../../types/fee';
 import {
-  Infinity,
+  Infinity as InfinityIcon,
   Calendar,
   Clock,
   AlertTriangle,
