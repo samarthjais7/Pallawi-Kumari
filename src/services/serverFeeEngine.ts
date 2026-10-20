@@ -47,7 +47,7 @@ function generateAuditHash(
 }
 
 export function evaluateRuleMatch(student: Student, rule: ConcessionSurchargeRule): boolean {
-  let stuVal: any = undefined;
+  let stuVal: unknown = undefined;
   if (rule.criteriaField === 'gender') stuVal = student.gender;
   else if (rule.criteriaField === 'category' || rule.criteriaField === 'caste_category') stuVal = student.category;
   else if (rule.criteriaField === 'quota') stuVal = student.quota;
@@ -55,12 +55,14 @@ export function evaluateRuleMatch(student: Student, rule: ConcessionSurchargeRul
   else if (rule.criteriaField === 'annual_income') stuVal = student.annualFamilyIncome;
   else if (rule.criteriaField === 'stream') stuVal = student.streamCode;
   else if (rule.criteriaField === 'sports_quota') {
-    stuVal = (student as any).sportsQuota ?? ((student as any).quota === 'Sports' ? 'Yes' : 'No');
+    const studentRec = student as unknown as Record<string, unknown>;
+    stuVal = studentRec.sportsQuota ?? (student.quota === 'Sports' ? 'Yes' : 'No');
   } else {
-    stuVal = (student as any).customFields?.[rule.criteriaField] ?? (student as any).enrollmentData?.[rule.criteriaField];
+    const studentRec = student as unknown as Record<string, unknown>;
+    stuVal = studentRec.customFields?.[rule.criteriaField] ?? studentRec.enrollmentData?.[rule.criteriaField];
   }
 
-  const parseCleanNumber = (val: any): number | null => {
+  const parseCleanNumber = (val: unknown): number | null => {
     if (typeof val === 'number') return isNaN(val) ? null : val;
     if (val === null || val === undefined || val === '') return null;
     const cleaned = String(val).replace(/[^0-9.-]/g, '');
@@ -80,16 +82,16 @@ export function evaluateRuleMatch(student: Student, rule: ConcessionSurchargeRul
       ? rule.criteriaValue
       : String(rule.criteriaValue ?? '').split(',').map((s) => s.trim());
     return list.map((item) => String(item).trim().toLowerCase()).includes(String(stuVal).trim().toLowerCase());
-  } else if (rule.criteriaOperator === 'less_than' || (rule.criteriaOperator as any) === 'less_than_or_equal') {
+  } else if (rule.criteriaOperator === 'less_than' || rule.criteriaOperator === 'less_than_or_equal') {
     const numStu = parseCleanNumber(stuVal);
     const numRule = parseCleanNumber(rule.criteriaValue);
     if (numStu === null || numRule === null) return false;
-    return (rule.criteriaOperator as any) === 'less_than_or_equal' ? numStu <= numRule : numStu < numRule;
-  } else if (rule.criteriaOperator === 'greater_than' || (rule.criteriaOperator as any) === 'greater_than_or_equal') {
+    return rule.criteriaOperator === 'less_than_or_equal' ? numStu <= numRule : numStu < numRule;
+  } else if (rule.criteriaOperator === 'greater_than' || rule.criteriaOperator === 'greater_than_or_equal') {
     const numStu = parseCleanNumber(stuVal);
     const numRule = parseCleanNumber(rule.criteriaValue);
     if (numStu === null || numRule === null) return false;
-    return (rule.criteriaOperator as any) === 'greater_than_or_equal' ? numStu >= numRule : numStu > numRule;
+    return rule.criteriaOperator === 'greater_than_or_equal' ? numStu >= numRule : numStu > numRule;
   }
 
   return false;

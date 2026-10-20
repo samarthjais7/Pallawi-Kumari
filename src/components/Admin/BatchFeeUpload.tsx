@@ -146,7 +146,7 @@ export const BatchFeeUpload: React.FC<Props> = ({
 
     const reader = new FileReader();
 
-    reader.onload = (e) => {
+    reader.onload = (e: ProgressEvent<FileReader>) => {
       try {
         const data = e.target?.result as ArrayBuffer;
         if (!data) {
@@ -166,9 +166,10 @@ export const BatchFeeUpload: React.FC<Props> = ({
         }
 
         setIsProcessingFile(false);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error auditing excel file:', err);
-        setParseError(`Spreadsheet audit exception: ${err.message || String(err)}`);
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        setParseError(`Spreadsheet audit exception: ${errorMessage}`);
         setIsProcessingFile(false);
       }
     };
@@ -245,7 +246,17 @@ export const BatchFeeUpload: React.FC<Props> = ({
   };
 
   // Handler: Run Chunked Array Processing Worker with atomic writeBatch commits (500 rows/cluster)
-  const handleStartChunkedWorker = async (itemsToProcess: FeeUploadBatchItem[], simulateErrorAtRow?: number) => {
+  const handleStartChunkedWorker = async (
+    itemsToProcess: FeeUploadBatchItem[],
+    simulateErrorAtRow?: number
+  ): Promise<{
+    success: boolean;
+    totalItemsProcessed: number;
+    totalChunksProcessed: number;
+    rollbackOccurred: boolean;
+    errorSummary: string;
+    clusterResults: unknown[];
+  } | null> => {
     if (!itemsToProcess || itemsToProcess.length === 0) return null;
 
     setIsChunkWorkerModalOpen(true);
@@ -265,18 +276,19 @@ export const BatchFeeUpload: React.FC<Props> = ({
 
       setChunkWorkerResult(result);
       return result;
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Fatal Chunk Worker Execution Error:', err);
+      const errorSummary = err instanceof Error ? err.message : 'Worker execution failed';
       const errRes = {
         success: false,
         totalItemsProcessed: 0,
         totalChunksProcessed: 0,
         rollbackOccurred: true,
-        errorSummary: err.message || 'Worker execution failed',
-        clusterResults: [],
+        errorSummary,
+        clusterResults: [] as unknown[],
       };
-      setChunkWorkerResult(errRes as any);
-      return errRes as any;
+      setChunkWorkerResult(errRes);
+      return errRes;
     } finally {
       setIsChunkWorkerRunning(false);
     }

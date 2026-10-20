@@ -779,7 +779,7 @@ export const PaymentProviderSettings: React.FC<Props> = ({
                 <label className="text-slate-800 font-bold block mb-1">Payment Mode *</label>
                 <select
                   value={offlineMode}
-                  onChange={(e) => setOfflineMode(e.target.value as any)}
+                  onChange={(e) => setOfflineMode(e.target.checked)}
                   className="w-full min-h-[44px] p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold"
                 >
                   <option value="Cash">Cash at Counter</option>

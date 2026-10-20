@@ -130,7 +130,7 @@ export const ReconciliationEngine: React.FC = () => {
       'Resolution Notes'
     ];
 
-    const escapeCsv = (val: any) => {
+    const escapeCsv = (val: unknown): string => {
       if (val === undefined || val === null) return '""';
       const str = String(val).replace(/"/g, '""');
       return `"${str}"`;
@@ -139,17 +139,17 @@ export const ReconciliationEngine: React.FC = () => {
     const rows = filtered.map((item) => [
       escapeCsv(item.date),
       escapeCsv(item.studentRollNo),
-      escapeCsv((item as any).studentName || '-'),
+      escapeCsv(item.studentName ?? '-'),
       escapeCsv(item.bankUtr),
       escapeCsv(item.gatewayTxId),
       escapeCsv(item.gateway),
       escapeCsv(item.erpReceiptNo),
-      escapeCsv(item.erpAmount),
-      escapeCsv(item.gatewayAmount),
-      escapeCsv(item.settledAmount),
-      escapeCsv(item.feeMdr),
+      escapeCsv(item.erpAmount.toString()),
+      escapeCsv(item.gatewayAmount.toString()),
+      escapeCsv(item.settledAmount.toString()),
+      escapeCsv(item.feeMdr.toString()),
       escapeCsv(item.status),
-      escapeCsv(item.resolutionNotes || '-')
+      escapeCsv(item.resolutionNotes ?? '-')
     ].join(','));
 
     const csvContent = [headers.join(','), ...rows].join('\r\n');

@@ -743,7 +743,7 @@ export const EnrollmentParameterOptimizer: React.FC<Props> = ({
                   <label className="font-bold text-slate-700 block mb-1">Category Classification</label>
                   <select
                     value={formCategory}
-                    onChange={(e) => setFormCategory(e.target.value as any)}
+                    onChange={(e) => setFormCategory(e.target.value as string)}
                     className="w-full px-3.5 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   >
                     <option value="Personal">Personal Details</option>

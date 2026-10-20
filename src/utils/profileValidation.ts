@@ -32,7 +32,7 @@ export const CORE_PROFILE_FIELDS: { key: string; label: string; isRequired: bool
 /**
  * Retrieve value of a field from a student object
  */
-export function getStudentFieldValue(student: Student, key: string): any {
+export function getStudentFieldValue(student: Student, key: string): string {
   if (!student) return '';
 
   // Direct top-level properties

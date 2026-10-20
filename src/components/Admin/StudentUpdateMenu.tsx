@@ -674,7 +674,7 @@ export const StudentUpdateMenu: React.FC<Props> = ({
 
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
-        const jsonRows: any[] = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+        const jsonRows = XLSX.utils.sheet_to_json<{ [key: string]: string | number }>(worksheet, { defval: '' });
 
         if (!jsonRows || jsonRows.length === 0) {
           setParseError('The uploaded spreadsheet is empty. Please upload an Excel or CSV file containing student roll numbers.');

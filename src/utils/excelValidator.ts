@@ -71,7 +71,7 @@ export function auditExcelFeeBatch(
     }
 
     const worksheet = workbook.Sheets[firstSheetName];
-    const rawRows: Record<string, any>[] = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+    const rawRows: Record<string, unknown>[] = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
 
     if (!rawRows || rawRows.length === 0) {
       result.criticalErrors.push('Worksheet contains zero data rows or is completely blank.');
@@ -258,19 +258,6 @@ export function auditExcelFeeBatch(
       else defaultRemark = 'Fee reaffirmed (no net delta)';
 
       result.validatedItems.push({
-        rowNumber: spreadsheetRowNum,
-        rollNo: liveStudent.rollNo,
-        studentName: liveStudent.name,
-        course: `${liveStudent.course} (${liveStudent.branch})`,
-        semester: liveStudent.semester,
-        currentTotalFee: currentFee,
-        newTotalFeePayable: proposedFee,
-        difference: diff,
-        status: 'Matched',
-        remarks: rawRemarks || defaultRemark,
-      });
-    }
-
     result.netDifference = result.totalFeeAfter - result.totalFeeBefore;
 
     // Determine batch validity & usability
@@ -283,9 +270,10 @@ export function auditExcelFeeBatch(
       result.isValidBatch = result.criticalErrors.length === 0;
     }
 
-  } catch (err: any) {
+  } catch (err: unknown) {
     result.isValidBatch = false;
-    result.criticalErrors.push(`Failed to parse spreadsheet: ${err.message || String(err)}`);
+    const message = err instanceof Error ? err.message : String(err);
+    result.criticalErrors.push(`Failed to parse spreadsheet: ${message}`);
   }
 
   return result;
@@ -339,7 +327,7 @@ export function auditStudentRosterSheet(
     }
 
     const worksheet = workbook.Sheets[firstSheetName];
-    const rawRows: Record<string, any>[] = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+    const rawRows: Record<string, unknown>[] = XLSX.utils.sheet_to_json<Record<string, unknown>>(worksheet, { defval: '' });
 
     if (!rawRows || rawRows.length === 0) {
       result.criticalErrors.push('Spreadsheet is empty with zero data rows.');
@@ -430,9 +418,10 @@ export function auditStudentRosterSheet(
       result.criticalErrors.push('None of the extracted roll numbers match existing student records.');
     }
 
-  } catch (err: any) {
+  } catch (err: unknown) {
     result.isValid = false;
-    result.criticalErrors.push(`Failed to parse roster file: ${err.message || String(err)}`);
+    const errMsg = err instanceof Error ? err.message : String(err);
+    result.criticalErrors.push(`Failed to parse roster file: ${errMsg}`);
   }
 
   return result;

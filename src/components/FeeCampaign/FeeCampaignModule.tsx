@@ -1065,7 +1065,11 @@ export const FeeCampaignModule: React.FC<Props> = ({
                     streams={streams}
                     studySubjects={studySubjects}
                     isEmbeddedCard={false}
-                    onNavigateToTab={(tab) => setAdminActiveTab(tab as any)}
+                    onNavigateToTab={(tab: unknown) => {
+                      if (typeof tab === 'string') {
+                        setAdminActiveTab(tab);
+                      }
+                    }}
                   />
                 </div>
               )}
@@ -1355,7 +1359,7 @@ export const FeeCampaignModule: React.FC<Props> = ({
                         <select
                           value={offlineMode}
                           onChange={(e) => {
-                            setOfflineMode(e.target.value as any);
+                            setOfflineMode(e.target.value as string);
                             setOfflineErrorNotice(null);
                           }}
                           className="w-full min-h-[44px] p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold"
@@ -1456,7 +1460,7 @@ export const FeeCampaignModule: React.FC<Props> = ({
                     'Fee Heads Breakdown'
                   ];
 
-                  const escapeCsv = (val: any) => {
+                  const escapeCsv = (val: unknown): string => {
                     if (val === undefined || val === null) return '""';
                     const str = String(val).replace(/"/g, '""');
                     return `"${str}"`;

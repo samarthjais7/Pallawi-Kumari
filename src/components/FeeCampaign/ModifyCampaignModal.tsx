@@ -396,7 +396,7 @@ export const ModifyCampaignModal: React.FC<Props> = ({
                   <label className="text-slate-800 font-bold block mb-1">Campaign Operational Status</label>
                   <select
                     value={status}
-                    onChange={(e) => setStatus(e.target.value as any)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStatus(e.target.value)}
                     className="w-full min-h-[40px] p-2 bg-slate-50 border border-slate-300 rounded-xl font-bold"
                   >
                     <option value="Active">Active (Accepting Student Payments)</option>
@@ -491,7 +491,7 @@ export const ModifyCampaignModal: React.FC<Props> = ({
                       <label className="text-slate-600 block mb-1">Fine Type</label>
                       <select
                         value={lateFeeType}
-                        onChange={(e) => setLateFeeType(e.target.value as any)}
+                        onChange={(e) => setLateFeeType(e.target.value as string)}
                         className="w-full min-h-[36px] p-1.5 bg-white border border-slate-300 rounded-lg font-bold"
                       >
                         <option value="PER_DAY">Per Day (₹/day)</option>

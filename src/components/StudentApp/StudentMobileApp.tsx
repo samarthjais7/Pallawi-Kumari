@@ -2010,7 +2010,7 @@ export const StudentMobileApp: React.FC<Props> = ({
               onMarkAsRead={(id) => onMarkNotificationAsRead?.(id)}
               onMarkAllAsRead={() => onMarkAllNotificationsAsRead?.()}
               onOpenDynamicQrPayment={(amt, purpose) => handleOpenDynamicQr(amt, purpose)}
-              onNavigateToTab={(tab) => handleTabChange(tab as any)}
+              onNavigateToTab={(tab: string) => handleTabChange(tab)}
             />
           </div>
         )}

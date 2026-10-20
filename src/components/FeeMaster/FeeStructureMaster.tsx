@@ -280,7 +280,7 @@ export const FeeStructureMaster: React.FC = () => {
                   <label className="text-slate-600 block mb-1 font-medium">Category</label>
                   <select
                     value={newHeadCategory}
-                    onChange={(e) => setNewHeadCategory(e.target.value as any)}
+                    onChange={(e) => setNewHeadCategory(e.target.value as string)}
                     className="w-full p-2 bg-slate-50 border border-slate-300 rounded"
                   >
                     <option value="Tuition">Tuition</option>

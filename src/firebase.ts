@@ -124,14 +124,18 @@ export const signInWithGoogle = async () => {
   return await signInWithPopup(auth, googleProvider);
 };
 
-export const syncUserToFirestore = async (userId: string, userData: any) => {
+export const syncUserToFirestore = async (userId: string, userData: unknown): Promise<void> => {
   const path = `users/${userId}`;
+  if (typeof userData !== 'object' || userData === null) {
+    throw new Error(`Expected userData to be an object, got ${typeof userData}`);
+  }
   try {
-    await setDoc(doc(db, 'users', userId), {
-      ...userData,
+    const dataToSave = {
+      ...(userData as Record<string, unknown>),
       id: userId,
       updatedAt: new Date().toISOString(),
-    }, { merge: true });
+    };
+    await setDoc(doc(db, 'users', userId), dataToSave, { merge: true });
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
   }
@@ -141,7 +145,7 @@ export const syncUserToFirestore = async (userId: string, userData: any) => {
 export const syncStudentToFirestore = async (student: Student) => {
   const path = `students/${student.id}`;
   try {
-    const { password, ...safeStudent } = student as any;
+    const { password, ...safeStudent }: Omit<Student, 'password'> = student;
     await setDoc(doc(db, 'students', student.id), {
       ...safeStudent,
       updatedAt: new Date().toISOString(),
@@ -182,7 +186,7 @@ export const syncStaffUserToFirestore = async (user: SchoolStaffUser, targetUid?
   const docId = targetUid || (auth.currentUser && auth.currentUser.email?.toLowerCase() === user.email?.toLowerCase() ? auth.currentUser.uid : user.id);
   const path = `staffUsers/${docId}`;
   try {
-    const { password, ...safeStaff } = user as any;
+    const { password, ...safeStaff }: Omit<SchoolStaffUser, 'password'> = user;
     await setDoc(doc(db, 'staffUsers', docId), {
       ...safeStaff,
       id: docId,
@@ -228,7 +232,7 @@ export const syncStreamToFirestore = async (stream: AcademicStream) => {
 export const syncStudentDueToFirestore = async (due: StudentDue) => {
   const path = `studentDues/${due.id}`;
   try {
-    const { password, ...safeDue } = due as any;
+    const { password, ...safeDue } = due;
     await setDoc(doc(db, 'studentDues', due.id), {
       ...safeDue,
       updatedAt: new Date().toISOString(),
@@ -238,11 +242,14 @@ export const syncStudentDueToFirestore = async (due: StudentDue) => {
   }
 };
 
-export const syncHelpdeskConfigToFirestore = async (cfg: any) => {
+export const syncHelpdeskConfigToFirestore = async (cfg: unknown): Promise<void> => {
   const path = `helpdeskConfig/global`;
   try {
+    if (typeof cfg !== 'object' || cfg === null) {
+      throw new TypeError('Invalid cfg: expected object');
+    }
     await setDoc(doc(db, 'helpdeskConfig', 'global'), {
-      ...cfg,
+      ...(cfg as Record<string, unknown>),
       updatedAt: new Date().toISOString(),
     });
   } catch (error) {
@@ -250,19 +257,28 @@ export const syncHelpdeskConfigToFirestore = async (cfg: any) => {
   }
 };
 
-export const syncHelpdeskTicketToFirestore = async (ticket: any) => {
+export interface HelpdeskTicket {
+  id: string;
+  [key: string]: unknown;
+}
+
+export const syncHelpdeskTicketToFirestore = async (
+  ticket: HelpdeskTicket
+): Promise<void> => {
   const path = `helpdeskTickets/${ticket.id}`;
   try {
     await setDoc(doc(db, 'helpdeskTickets', ticket.id), {
       ...ticket,
       updatedAt: new Date().toISOString(),
     });
-  } catch (error) {
+  } catch (error: unknown) {
     handleFirestoreError(error, OperationType.WRITE, path);
   }
 };
 
-export const syncCertificateThemeToFirestore = async (theme: any) => {
+export const syncCertificateThemeToFirestore = async (
+  theme: Record<string, unknown> & { id: string }
+): Promise<void> => {
   const path = `certificateThemes/${theme.id}`;
   try {
     await setDoc(doc(db, 'certificateThemes', theme.id), {
@@ -283,7 +299,9 @@ export const deleteCertificateThemeFromFirestore = async (themeId: string) => {
   }
 };
 
-export const syncPaymentProviderToFirestore = async (provider: any) => {
+export const syncPaymentProviderToFirestore = async (
+  provider: Record<string, unknown>
+): Promise<void> => {
   const path = `paymentProvider/active`;
   try {
     await setDoc(doc(db, 'paymentProvider', 'active'), {
