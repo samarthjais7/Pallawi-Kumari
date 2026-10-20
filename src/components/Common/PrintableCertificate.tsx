@@ -237,8 +237,8 @@ export const PrintableCertificate: React.FC<Props> = ({
                 </p>
 
                 <p className="text-justify text-base">
-                  This certificate is issued on the student's request for the specific purpose of: 
-                  <span className="italic font-bold text-slate-900"> "{certificate?.purpose || 'Official verification / Scholarship / Passport application'}"</span>.
+                  This certificate is issued on the student&apos;s request for the specific purpose of: 
+                  <span className="italic font-bold text-slate-900">&quot;{certificate?.purpose || 'Official verification / Scholarship / Passport application'}&quot;</span>.
                 </p>
 
                 <p className="text-justify text-base">
@@ -260,7 +260,7 @@ export const PrintableCertificate: React.FC<Props> = ({
                     <strong className="text-slate-900 uppercase">{student.name}</strong>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">2. Father's / Guardian's Name:</span>
+                    <span className="text-slate-500 block">2. Father&apos;s / Guardian&apos;s Name:</span>
                     <strong className="text-slate-900">{student.fatherName}</strong>
                   </div>
                   <div>
@@ -485,7 +485,7 @@ export const PrintableCertificate: React.FC<Props> = ({
 
                       <p className="text-justify text-base">
                         This certificate is issued on the student's request for the specific purpose of: 
-                        <span className="italic font-bold text-slate-900"> "{certificate?.purpose || 'Official verification / Scholarship / Passport application'}"</span>.
+                        <span className="italic font-bold text-slate-900"> &quot;{certificate?.purpose || 'Official verification / Scholarship / Passport application'}&quot;</span>.
                       </p>
 
                       <p className="text-justify text-base">
@@ -507,7 +507,7 @@ export const PrintableCertificate: React.FC<Props> = ({
                           <strong className="text-slate-900 uppercase">{student.name}</strong>
                         </div>
                         <div>
-                          <span className="text-slate-500 block">2. Father's / Guardian's Name:</span>
+                          <span className="text-slate-500 block">2. Father&apos;s / Guardian&apos;s Name:</span>
                           <strong className="text-slate-900">{student.fatherName}</strong>
                         </div>
                         <div>

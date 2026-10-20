@@ -270,7 +270,7 @@ export const StudentAchievementManagerModal: React.FC<Props> = ({
           </div>
           <h4 className="text-sm font-bold text-slate-900">Restricted School User Privilege</h4>
           <p className="text-xs text-slate-600 max-w-md mx-auto">
-            Your staff account is not currently authorized to award gems or record student honors. The Institutional Admin or Accountant can designate your email in the "Authorized Staff" directory.
+            Your staff account is not currently authorized to award gems or record student honors. The Institutional Admin or Accountant can designate your email in the &quot;Authorized Staff&quot; directory.
           </p>
           {!isFullPage && (
             <button

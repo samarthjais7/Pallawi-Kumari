@@ -375,7 +375,7 @@ export const QuickFeePaymentModal: React.FC<Props> = ({
                   {/* Academic info grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs pt-3">
                     <div>
-                      <span className="text-[10px] text-slate-500 block">Father's Name</span>
+                      <span className="text-[10px] text-slate-500 block">Father&apos;s Name</span>
                       <span className="font-semibold text-slate-800">{verifiedStudent.fatherName || 'N/A'}</span>
                     </div>
                     <div>

@@ -1115,7 +1115,7 @@ export const StudentUpdateMenu: React.FC<Props> = ({
             Statutory Student Profile Governance:
           </span>
           <p className="text-[11px] text-slate-600 leading-relaxed">
-            Per university statutory policy, registered students do not have the right to amend their core mandatory profile parameters (<strong>Roll No, Name, Date of Birth, Father's Name, Course, Subject, Semester, Gender, Caste</strong>).
+            Per university statutory policy, registered students do not have the right to amend their core mandatory profile parameters (<strong>Roll No, Name, Date of Birth, Father&apos;s Name, Course, Subject, Semester, Gender, Caste</strong>).
             All academic migrations, semester promotions, and course roster assignments are managed authoritatively here by the <strong>Accounts Office / Academic Administration</strong>.
           </p>
         </div>
@@ -1787,7 +1787,7 @@ export const StudentUpdateMenu: React.FC<Props> = ({
                 <span className="text-xs text-slate-500">
                   {updateMode === 'quota' ? (
                     <>
-                      {matchedCount} student profile(s) will be updated with Quota Field: <strong>{effectiveQuotaFields.find((q) => q.key === selectedQuotaFieldKey)?.label}</strong> → Target Status: <strong>"{selectedQuotaStatus}"</strong>.
+                      {matchedCount} student profile(s) will be updated with Quota Field: <strong>{effectiveQuotaFields.find((q) => q.key === selectedQuotaFieldKey)?.label}</strong> → Target Status: <strong>&quot;{selectedQuotaStatus}&quot;</strong>.
                     </>
                   ) : (
                     <>

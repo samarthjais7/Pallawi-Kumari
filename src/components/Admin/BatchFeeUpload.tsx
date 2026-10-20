@@ -668,7 +668,7 @@ export const BatchFeeUpload: React.FC<Props> = ({
                           <span>Audit Warnings: {auditResult.warnings.length} Anomalies Flagged</span>
                         </div>
                         <span className="text-[11px] font-semibold text-amber-700">
-                          Recommended: Use "Submit Only Matched" to auto-exclude invalid rows
+                          Recommended: Use &quot;Submit Only Matched&quot; to auto-exclude invalid rows
                         </span>
                       </div>
                       <div className="max-h-24 overflow-y-auto space-y-1 pr-2">
@@ -1370,7 +1370,7 @@ export const BatchFeeUpload: React.FC<Props> = ({
                     </span>
                     {inspectingBatch.approvalRemarks && (
                       <p className="text-[10px] text-emerald-700 mt-1 italic">
-                        "{inspectingBatch.approvalRemarks}"
+                        &quot;{inspectingBatch.approvalRemarks}&quot;
                       </p>
                     )}
                   </div>

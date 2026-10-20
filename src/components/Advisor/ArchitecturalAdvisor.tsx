@@ -317,7 +317,7 @@ export const ArchitecturalAdvisor: React.FC<Props> = ({ onSwitchToLiveSystem }) 
               </div>
               <div className="pt-3 border-t border-slate-100 bg-slate-50/60 -mx-5 -mb-5 p-4 rounded-b-xl">
                 <span className="text-[11px] font-semibold text-indigo-900 block mb-1">
-                  Why it's essential:
+                  Why it&apos;s essential:
                 </span>
                 <p className="text-[11px] text-slate-600 leading-normal">
                   {pillar.whyEssential}
@@ -337,7 +337,7 @@ export const ArchitecturalAdvisor: React.FC<Props> = ({ onSwitchToLiveSystem }) 
               <span>Interactive Feasibility & ROI Modeler</span>
             </div>
             <h3 className="text-xl font-bold text-white">
-              Calculate Your College's Annual Savings & Efficiency Gain
+              Calculate Your College&apos;s Annual Savings & Efficiency Gain
             </h3>
             <p className="text-xs text-slate-400 mt-1">
               Simulate shifting from manual cashier & legacy gateway to Modern Virtual Account + Smart Collect.

@@ -231,7 +231,7 @@ export const ModifyCampaignModal: React.FC<Props> = ({
 
           <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
             <span className="text-slate-600 font-bold block">
-              Staff Members Nominated by Admin for "{campaign.title}":
+              Staff Members Nominated by Admin for &quot;{campaign.title}&quot;:
             </span>
             {campaign.nominatedStaffNames && campaign.nominatedStaffNames.length > 0 ? (
               <div className="flex flex-wrap gap-1.5 pt-1">

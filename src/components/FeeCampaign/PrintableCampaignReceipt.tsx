@@ -318,7 +318,7 @@ export const PrintableCampaignReceipt: React.FC<Props> = ({
               <span>Cancel Fee Receipt #{activeP.receiptNo}?</span>
             </div>
             <p className="text-xs text-slate-600">
-              Cancelled receipts stay permanently visible and flagged as "Cancelled" in the student ledger and audit trail.
+              Cancelled receipts stay permanently visible and flagged as &quot;Cancelled&quot; in the student ledger and audit trail.
             </p>
             <form onSubmit={handleConfirmCancel} className="space-y-3">
               <div>
