@@ -1093,7 +1093,7 @@ export default function App() {
             totalFee: fromPaisa(effectiveTotalPaisa),
             pendingFee: fromPaisa(newPendingPaisa),
             hallTicketBlocked: newPendingPaisa > 0 
-              ? (newPendingPaisa > ((collegeProfile as any)?.defaulterThresholdPaisa || 100000) ? true : Boolean(student.hallTicketBlocked))
+              ? (newPendingPaisa > (collegeProfile?.defaulterThresholdPaisa ?? 100000) ? true : Boolean(student.hallTicketBlocked))
               : false,
           };
 

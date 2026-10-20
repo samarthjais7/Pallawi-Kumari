@@ -151,7 +151,7 @@ export const SchoolUserDirectory: React.FC<Props> = ({
     totalFee: number;
     paidFee: number;
     scholarshipWaiverPercent: number;
-    customFields: Record<string, any>;
+    customFields: Record<string, unknown>;
     profilePicture: string;
   }>({
     rollNo: '',
@@ -458,7 +458,7 @@ export const SchoolUserDirectory: React.FC<Props> = ({
         const wb = XLSX.read(bstr, { type: 'binary' });
         const wsName = wb.SheetNames[0];
         const ws = wb.Sheets[wsName];
-        const rows: any[] = XLSX.utils.sheet_to_json(ws);
+        const rows: Record<string, unknown>[] = XLSX.utils.sheet_to_json(ws);
 
         if (!rows || rows.length === 0) {
           setUploadError('The uploaded spreadsheet contains no student data rows.');
@@ -471,7 +471,7 @@ export const SchoolUserDirectory: React.FC<Props> = ({
             for (const k of keys) {
               for (const rowKey of Object.keys(r)) {
                 if (rowKey.trim().toLowerCase() === k.toLowerCase()) {
-                  return String(r[rowKey] ?? '').trim();
+                  return String((r as Record<string, unknown>)[rowKey] ?? '').trim();
                 }
               }
             }
@@ -481,7 +481,7 @@ export const SchoolUserDirectory: React.FC<Props> = ({
           const rollNo = getVal(['roll no', 'rollno', 'roll', 'roll_no', 'roll number']) || `GEN-${Date.now().toString().slice(-4)}-${idx + 1}`;
           const name = getVal(['student name', 'name', 'full name', 'candidate name']) || 'Unnamed Student';
           const dob = getVal(['date of birth', 'dob', 'date of birth (yyyy-mm-dd)', 'birth date']) || '2004-01-01';
-          const gender = (getVal(['gender', 'sex']) || 'Male') as any;
+          const gender = getVal(['gender', 'sex']) || 'Male';
           const category = getVal(['caste category', 'caste', 'category', 'social category']) || 'General';
           const subCaste = getVal(['sub caste', 'subcaste', 'community']) || '';
           const fatherName = getVal(['father name', 'father', "father's name", 'guardian name']) || '';
@@ -495,14 +495,14 @@ export const SchoolUserDirectory: React.FC<Props> = ({
           const streamCode = getVal(['stream code', 'stream']) || 'CSE';
           const semester = Number(getVal(['semester', 'sem']) || 1);
           const year = Math.ceil(semester / 2) || 1;
-          const quota = (getVal(['admission quota', 'quota']) || 'State Merit (Subsidized)') as any;
+          const quota = getVal(['admission quota', 'quota']) || 'State Merit (Subsidized)';
           const hostelStr = getVal(['hostel resident', 'hostel', 'hostel resident (yes/no)']);
           const hostel = hostelStr.toLowerCase().includes('y') || hostelStr.toLowerCase().includes('true');
           const totalFee = Number(getVal(['total annual fee', 'total fee', 'fee']) || 28500);
           const paidFee = Number(getVal(['paid fee', 'paid']) || 0);
 
           // Extract custom enrollment fields
-          const customFields: Record<string, any> = {};
+          const customFields: Record<string, string | number> = {};
           enrollmentFields.forEach((fld) => {
             const val = getVal([fld.label, fld.key]);
             if (val) {
@@ -548,8 +548,12 @@ export const SchoolUserDirectory: React.FC<Props> = ({
 
         setUploadedStudentsPreview(parsed);
         setIsProcessingUpload(false);
-      } catch (err: any) {
-        setUploadError(`Failed to parse file: ${err.message || 'Invalid format'}`);
+      } catch (err: unknown) {
+        let message = 'Invalid format';
+        if (err instanceof Error) {
+          message = err.message;
+        }
+        setUploadError(`Failed to parse file: ${message}`);
         setIsProcessingUpload(false);
       }
     };
@@ -1376,7 +1380,7 @@ export const SchoolUserDirectory: React.FC<Props> = ({
                   <label className="text-slate-700 font-semibold block mb-1">Account Status</label>
                   <select
                     value={staffForm.status}
-                    onChange={(e) => setStaffForm({ ...staffForm, status: e.target.value as any })}
+                    onChange={(e) => setStaffForm({ ...staffForm, status: e.target.value })}
                     className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:bg-white font-semibold"
                   >
                     <option value="Active">Active (Permitted)</option>
@@ -1601,7 +1605,7 @@ export const SchoolUserDirectory: React.FC<Props> = ({
                   <label className="text-slate-700 font-semibold block mb-1">Gender *</label>
                   <select
                     value={studentForm.gender}
-                    onChange={(e) => setStudentForm({ ...studentForm, gender: e.target.value as any })}
+                    onChange={(e) => setStudentForm({ ...studentForm, gender: e.target.value as string })}
                     className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:bg-white font-medium"
                   >
                     <option value="Male">Male</option>

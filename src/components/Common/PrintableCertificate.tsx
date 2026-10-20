@@ -60,7 +60,11 @@ export const PrintableCertificate: React.FC<Props> = ({
     streamCode: 'GEN',
     subjectsEnrolled: [],
     year: 1,
-    semester: (certificate as any)?.semester || (noDuesApp as any)?.semester || 1,
+    semester: typeof certificate?.semester === 'number'
+      ? certificate.semester
+      : typeof noDuesApp?.semester === 'number'
+      ? noDuesApp.semester
+      : 1,
     admissionYear: 2025,
     dateOfBirth: 'N/A',
     category: 'General',

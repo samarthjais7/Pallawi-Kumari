@@ -613,7 +613,7 @@ export const CertificateThemeStudio: React.FC<Props> = ({
                     </label>
                     <select
                       value={themeForm.certificateType}
-                      onChange={(e) => setThemeForm({ ...themeForm, certificateType: e.target.value as any })}
+                      onChange={(e) => setThemeForm({ ...themeForm, certificateType: e.target.value })}
                       className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 focus:bg-white"
                     >
                       {CERTIFICATE_TYPES.map((ct) => (
@@ -851,7 +851,7 @@ export const CertificateThemeStudio: React.FC<Props> = ({
                     </label>
                     <select
                       value={themeForm.headerStyle}
-                      onChange={(e) => setThemeForm({ ...themeForm, headerStyle: e.target.value as any })}
+                      onChange={(e) => setThemeForm({ ...themeForm, headerStyle: e.target.value })}
                       className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 focus:bg-white"
                     >
                       <option value="classic-centered">Classic Centered with Dual Badges</option>
@@ -951,7 +951,7 @@ export const CertificateThemeStudio: React.FC<Props> = ({
                     </label>
                     <select
                       value={themeForm.sealPosition}
-                      onChange={(e) => setThemeForm({ ...themeForm, sealPosition: e.target.value as any })}
+                      onChange={(e) => setThemeForm({ ...themeForm, sealPosition: e.target.value as string })}
                       className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 focus:bg-white"
                     >
                       <option value="bottom-right">Bottom Right (Beside Signatures)</option>

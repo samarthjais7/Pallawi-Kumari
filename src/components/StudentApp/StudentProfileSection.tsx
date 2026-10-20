@@ -69,7 +69,7 @@ export const StudentProfileSection: React.FC<Props> = ({
     enrollmentFields
   );
 
-  const handleCustomFieldChange = (key: string, value: any) => {
+  const handleCustomFieldChange = (key: string, value: unknown) => {
     setFormData((prev) => ({
       ...prev,
       customFields: {
@@ -124,7 +124,6 @@ export const StudentProfileSection: React.FC<Props> = ({
     if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       errors.email = 'Valid email address is required (e.g. name@domain.com)';
     }
-
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
@@ -149,7 +148,7 @@ export const StudentProfileSection: React.FC<Props> = ({
       annualFamilyIncome: parsedIncome,
       domicileState: formData.domicileState,
       hostelResident: formData.hostelResident,
-      quota: formData.quota as any,
+      quota: formData.quota,
       sportsQuota: formData.customFields?.sports_quota,
       physicallyHandicapped: formData.customFields?.physically_handicapped,
       officeRemarks: 'Pending administrative verification and physical document audit.',

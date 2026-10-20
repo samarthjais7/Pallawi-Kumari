@@ -22,7 +22,8 @@ import {
   Printer,
   Plus,
   ShieldCheck,
-  UserCheck
+  UserCheck,
+  LucideIcon
 } from 'lucide-react';
 import { PrintableCertificate } from '../Common/PrintableCertificate';
 import { safeLower } from '../../utils/safeHelpers';
@@ -33,7 +34,7 @@ interface Props {
   onUpdateNoDuesApp: (updatedApp: StudentNoDuesApplication) => void;
 }
 
-const DEPARTMENTS: { key: DepartmentKey; label: string; icon: any; officer: string }[] = [
+const DEPARTMENTS: { key: DepartmentKey; label: string; icon: LucideIcon; officer: string }[] = [
   { key: 'accounts', label: 'Accounts & Treasury', icon: Building2, officer: 'S. N. Sharma (Accounts Officer)' },
   { key: 'library', label: 'Central Library', icon: BookOpen, officer: 'Dr. P. K. Gupta (Chief Librarian)' },
   { key: 'department_lab', label: 'Department Labs', icon: Cpu, officer: 'Prof. Animesh Roy (HOD)' },
@@ -438,7 +439,7 @@ export const NoDuesModule: React.FC<Props> = ({
                 <label className="text-slate-700 block mb-1 font-medium">Reason for Clearance *</label>
                 <select
                   value={newReason}
-                  onChange={(e) => setNewReason(e.target.value as any)}
+                  onChange={(e) => setNewReason(e.target.value)}
                   className="w-full p-2 bg-slate-50 border border-slate-300 rounded text-xs"
                 >
                   <option value="Completion of Course (TC/Degree)">Completion of Course (TC / Degree)</option>

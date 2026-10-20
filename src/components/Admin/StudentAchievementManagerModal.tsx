@@ -502,7 +502,7 @@ export const StudentAchievementManagerModal: React.FC<Props> = ({
                   <label className="text-slate-700 font-semibold block mb-1">Honor / Badge Level</label>
                   <select
                     value={badgeLevel}
-                    onChange={(e) => setBadgeLevel(e.target.value as any)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBadgeLevel(e.target.value)}
                     className="w-full p-2 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white font-medium"
                   >
                     <option value="Gold">Gold Medal / 1st Place</option>

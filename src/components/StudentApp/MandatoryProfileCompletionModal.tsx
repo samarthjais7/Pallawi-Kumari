@@ -57,7 +57,7 @@ export const MandatoryProfileCompletionModal: React.FC<Props> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Helper to handle custom field change
-  const handleCustomFieldChange = (key: string, value: any) => {
+  const handleCustomFieldChange = (key: string, value: unknown): void => {
     setFormData((prev) => ({
       ...prev,
       customFields: {
@@ -134,7 +134,7 @@ export const MandatoryProfileCompletionModal: React.FC<Props> = ({
       name: isRegistered && student.name ? student.name : formData.name.trim(),
       rollNo: isRegistered && student.rollNo ? student.rollNo : formData.rollNo.trim(),
       dateOfBirth: isRegistered && student.dateOfBirth ? student.dateOfBirth : formData.dateOfBirth,
-      gender: (isRegistered && student.gender ? student.gender : formData.gender) as any,
+      gender: (isRegistered && student.gender ? student.gender : formData.gender) as Student['gender'],
       category: isRegistered && student.category ? student.category : formData.category,
       fatherName: isRegistered && student.fatherName ? student.fatherName : formData.fatherName.trim(),
       parentName: isRegistered && student.fatherName ? student.fatherName : formData.fatherName.trim(),
@@ -322,7 +322,7 @@ export const MandatoryProfileCompletionModal: React.FC<Props> = ({
                 ) : (
                   <select
                     value={formData.gender}
-                    onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
+                    onChange={(e) => setFormData({ ...formData, gender: e.target.value as string })}
                     className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-semibold text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   >
                     <option value="Male">Male</option>

@@ -272,7 +272,7 @@ export const DynamicQrConfigModal: React.FC<Props> = ({
                 <select
                   disabled={!isAccountantOrAdmin}
                   value={formData.accountType}
-                  onChange={(e) => setFormData({ ...formData, accountType: e.target.value as any })}
+                  onChange={(e) => setFormData({ ...formData, accountType: e.target.value })}
                   className="w-full p-2 bg-white border border-slate-300 rounded-xl font-medium focus:ring-2 focus:ring-emerald-600 disabled:bg-slate-100"
                 >
                   <option value="Govt_Treasury">Govt Treasury Current Account</option>

@@ -210,7 +210,7 @@ export async function executeChunkedBatchUpload(
         const currentPaidPaisa = toPaisa(matchedStudent?.paidFee || 0);
         const newPendingPaisa = paisaSub(newTotalPaisa, currentPaidPaisa, true);
 
-        const updatePayload: Record<string, any> = {
+        const updatePayload: Record<string, unknown> = {
           id: matchedStudent?.id || studentId,
           course: matchedStudent?.course || 'B.Tech',
           name: matchedStudent?.name || item.studentName || 'Student',
@@ -251,10 +251,10 @@ export async function executeChunkedBatchUpload(
       // Step 4: Tail-recursive invocation of the next 500-row chunk
       return processNextChunk(chunkIndex + 1);
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       // Step 5: Atomicity Rollback Handler
       // The current 500-student batch was not committed, preventing partial database state
-      const errorMessage = err?.message || String(err);
+      const errorMessage = err instanceof Error ? err.message : String(err);
       console.warn(`[Batch Worker Rollback] Chunk ${chunkIndex + 1} rolled back cleanly:`, errorMessage);
 
       if (options.onProgress) {
